@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palais Royal - Luxury Beauty Distribution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #C9A46B;
+      --red-dark: #A98249;
+      --navy: #1E3157;
+      --navy-2: #2B4474;
+      --heading: #152238;
+      --text: #4A5565;
+      --muted: #7A8493;
+      --line: rgba(201,164,107,.16);
+      --surface: #F3EFE9;
+      --ivory: #FAF8F4;
+      --light: #F7F8FA;
+      --white: #fff;
+      --shadow: 0 20px 50px rgba(21, 34, 56, .08);
+      --shadow-soft: 0 1px 2px rgba(21, 34, 56, .05), 0 16px 40px rgba(21, 34, 56, .07);
+      --radius: 24px;
+      --max: 1400px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(201,164,107,.10), transparent 34rem),
+        radial-gradient(circle at bottom left, rgba(30,49,87,.08), transparent 36rem),
+        var(--ivory);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3, h4, .logo, .footer-logo { font-family: "Sora", "Inter", sans-serif; letter-spacing: -.02em; color: var(--heading); }
+    p { font-size: 18px; line-height: 1.8; }
+    .topbar { background: var(--navy); color: #fff; font-size: 12px; font-weight: 700; }
+    .topbar .wrap {
+      height: 29px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .topbar-info { display: flex; align-items: center; gap: 24px; white-space: nowrap; }
+    .nav {
+      border-bottom: 1px solid rgba(38, 54, 83, .08);
+      background:#fff;
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .nav .wrap {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      color: var(--navy);
+    }
+    .logo-img {
+      width: auto;
+      height: 52px;
+      object-fit: contain;
+      display: block;
+    }
+    .logo-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; align-items: center; gap: 44px; list-style: none; }
+    .nav-links a {
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      opacity: .78;
+      position: relative;
+      transition: opacity .3s ease, color .3s ease;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -9px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .3s ease;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a:hover { color: var(--red); opacity: 1; }
+    .nav-cta {
+      border: 1px solid var(--red);
+      color: var(--red);
+      border-radius: 999px;
+      min-height: 52px;
+      padding: 0 28px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: #fff;
+      transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .nav-cta:hover { background: var(--red); color: #fff; transform: translateY(-1px); box-shadow: 0 10px 24px rgba(186,150,101,.2); }
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(201,164,107,.28);
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      color: var(--navy);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .nav-toggle span,
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform .3s ease, opacity .3s ease;
+    }
+    .nav-toggle span { position: relative; }
+    .nav-toggle span::before { position: absolute; transform: translateY(-6px); }
+    .nav-toggle span::after { position: absolute; transform: translateY(6px); }
+    .nav.is-open .nav-toggle span { background: transparent; }
+    .nav.is-open .nav-toggle span::before { transform: rotate(45deg); background: var(--navy); }
+    .nav.is-open .nav-toggle span::after { transform: rotate(-45deg); background: var(--navy); }
+
+    .hero { padding: 95px 0 42px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 54px;
+    }
+    .hero h1 {
+      color: var(--navy);
+      font-size: clamp(36px, 4.7vw, 61px);
+      line-height: 1.13;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      max-width: 520px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--navy);
+      color: #fff;
+      padding: 0 30px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover { background: var(--navy-2); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(30,49,87,.18); }
+    .btn.light { background: #fff; border: 1px solid var(--red); color: var(--red); }
+    .btn.light:hover { background: var(--red); color: #fff; box-shadow: 0 14px 30px rgba(201,164,107,.22); }
+    .hero-art {
+      position: relative;
+      min-height: 395px;
+      display: grid;
+      place-items: center;
+    }
+    .circle {
+      width: min(392px, 80vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--red);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    .circle::after {
+      content: "";
+      position: absolute;
+      inset: 34px 58px;
+      border-radius: 18px;
+      background:
+        linear-gradient(90deg, transparent 45%, rgba(15,42,58,.16) 45% 55%, transparent 55%),
+        linear-gradient(#d8d2c7 0 58%, #222 58%);
+      transform: rotate(-7deg);
+    }
+    .courier {
+      position: relative;
+      z-index: 2;
+      width: 170px;
+      height: 280px;
+    }
+    .courier::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 48px;
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: #1f2328;
+      box-shadow: 0 53px 0 16px #111820, 0 122px 0 24px var(--red);
+    }
+    .courier::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      bottom: 0;
+      width: 134px;
+      height: 116px;
+      background: #d9a95c;
+      border-radius: 4px;
+      box-shadow: inset 0 42px 0 rgba(255,255,255,.12);
+    }
+    .dash {
+      position: absolute;
+      inset: 6px 10px 0 auto;
+      width: 220px;
+      height: 305px;
+      border: 2px dashed #bbc6ce;
+      border-left: 0;
+      border-bottom: 0;
+      border-radius: 0 999px 0 0;
+      transform: rotate(16deg);
+    }
+    .float-icon {
+      position: absolute;
+      z-index: 4;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--red);
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      font-weight: 800;
+    }
+    .fi-1 { top: 16px; right: 108px; }
+    .fi-2 { left: 58px; top: 142px; }
+    .fi-3 { right: 138px; bottom: 16px; }
+
+    .features { padding: 38px 0 86px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .feature {
+      background: #fff;
+      min-height: 86px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      align-items: center;
+      gap: 17px;
+      padding: 20px 22px;
+    }
+    .feature-icon { color: var(--red); font-size: 30px; line-height: 1; }
+    .feature h3 { color: var(--navy); font-size: 14px; text-transform: uppercase; margin-bottom: 8px; }
+    .feature p { color: var(--muted); font-size: 12px; }
+
+    .track { padding: 0 0 90px; }
+    .track-box {
+      position: relative;
+      background: var(--red);
+      color: #fff;
+      border-radius: var(--radius);
+      min-height: 206px;
+      display: grid;
+      grid-template-columns: .75fr 1fr;
+      align-items: center;
+      gap: 44px;
+      padding: 48px 72px;
+      overflow: hidden;
+    }
+    .track-box::before,
+    .join-box::after {
+      content: "";
+      position: absolute;
+      width: 98px;
+      height: 98px;
+      background-image: radial-gradient(rgba(255,255,255,.38) 2px, transparent 2px);
+      background-size: 14px 14px;
+    }
+    .track-box::before { left: -22px; top: -28px; }
+    .track h2, .split-card h2, .section-title, .join h2 {
+      font-size: clamp(28px, 3.1vw, 40px);
+      line-height: 1.18;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .track p, .join p { font-size: 13px; line-height: 1.8; margin-top: 18px; max-width: 285px; }
+    .track-form { display: grid; grid-template-columns: 1fr 165px; gap: 12px; }
+    .track-form input {
+      height: 48px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,.8);
+      background: transparent;
+      color: #fff;
+      padding: 0 22px;
+      outline: 0;
+    }
+    .track-form input::placeholder { color: rgba(255,255,255,.75); }
+
+    .split { padding: 0 0 100px; }
+    .split-grid {
+      display: grid;
+      grid-template-columns: .78fr 1fr;
+      align-items: end;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .worker {
+      min-height: 365px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+    }
+    .worker::before {
+      content: "";
+      width: 158px;
+      height: 118px;
+      border-radius: 5px;
+      background: #dca955;
+      box-shadow: 0 -90px 0 -18px var(--red), 0 -150px 0 -44px var(--red), 0 -31px 0 16px #d8d2c7;
+    }
+    .split-card {
+      background: var(--navy);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 70px 72px;
+      min-height: 295px;
+      margin-left: -24px;
+    }
+    .split-card p { color: rgba(255,255,255,.78); font-size: 13px; line-height: 1.9; margin: 24px 0 26px; }
+
+    .testimonials { padding: 0 0 104px; text-align: center; }
+    .section-title { color: var(--navy); margin-bottom: 20px; }
+    .section-sub { color: var(--muted); font-size: 13px; line-height: 1.8; max-width: 535px; margin: 0 auto 56px; }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .test-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px 30px 30px;
+      min-height: 260px;
+    }
+    .test-card p { color: var(--text); font-weight: 700; line-height: 1.45; margin-bottom: 24px; }
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--red), var(--navy));
+    }
+    .test-name { color: var(--navy); font-size: 13px; font-weight: 800; text-transform: uppercase; }
+    .test-role { color: var(--muted); font-size: 11px; text-transform: uppercase; margin-bottom: 12px; }
+    .stars { color: var(--red); letter-spacing: 2px; }
+
+    .brands { padding: 0 0 92px; }
+    .brand-row {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      align-items: center;
+      gap: 48px;
+    }
+    .brand-row h2 { color: var(--navy); font-size: 31px; font-weight: 800; text-transform: uppercase; margin-bottom: 22px; }
+    .brand-row p { color: var(--muted); font-size: 13px; line-height: 1.8; max-width: 320px; }
+    .brand-logos {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      gap: 20px;
+    }
+    .brand-logo {
+      min-height: 118px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      box-shadow: 0 10px 26px rgba(15, 42, 58, .07);
+    }
+    .brand-logo img {
+      width: 100%;
+      max-width: 150px;
+      max-height: 74px;
+      object-fit: contain;
+    }
+
+    .brand-page { padding-bottom: 0; }
+    .brand-hero {
+      padding: 120px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .brand-hero h1 {
+      font-size: clamp(48px, 6vw, 78px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      margin-bottom: 34px;
+      text-transform: none;
+    }
+    .brand-copy {
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 585px;
+      display: grid;
+      gap: 20px;
+      padding: 30px 0 0;
+      border-top: 1px solid rgba(201,164,107,.28);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .brand-mark-wrap {
+      position: relative;
+      min-height: 330px;
+      display: grid;
+      place-items: center;
+    }
+    .brand-mark-wrap::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 12px;
+      width: 360px;
+      height: 286px;
+      background:
+        radial-gradient(circle at top right, rgba(201,164,107,.24), transparent 14rem),
+        linear-gradient(135deg, rgba(30,49,87,.98), rgba(43,68,116,.88)),
+        var(--navy);
+      border-radius: 26px;
+      z-index: 0;
+    }
+    .brand-mark {
+      position: relative;
+      z-index: 1;
+      width: min(360px, 90%);
+      aspect-ratio: 1.15;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.62);
+      border-radius: 22px;
+      box-shadow: var(--shadow-soft);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      animation: floatCard 6s ease-in-out infinite;
+      display: grid;
+      place-items: center;
+      color: var(--red);
+      text-align: center;
+      font-family: Georgia, serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 24px;
+    }
+    .brand-mark span {
+      display: block;
+      font-size: 46px;
+      line-height: 1;
+      margin-bottom: 18px;
+      letter-spacing: 0;
+    }
+    .brand-gallery {
+      padding: 0 0 80px;
+    }
+    .gallery-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      background: #fff;
+    }
+    .gallery-track {
+      display: flex;
+      gap: 18px;
+      transition: transform .7s cubic-bezier(.22, 1, .36, 1);
+      will-change: transform;
+    }
+    .gallery-slide {
+      flex: 0 0 calc((100% - 36px) / 3);
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      border-radius: 18px;
+    }
+    .gallery-slide img {
+      width: 100%;
+      height: 310px;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 3.5s ease, filter .4s ease;
+    }
+    .gallery-slide.is-active img {
+      transform: scale(1.03);
+      filter: saturate(1.03) contrast(1.02);
+    }
+    .gallery-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 10px 28px rgba(38,54,83,.16);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+    .gallery-dot {
+      width: 10px;
+      height: 10px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(38,54,83,.28);
+      cursor: pointer;
+      padding: 0;
+      transition: width .3s ease, background .3s ease, transform .3s ease;
+    }
+    .gallery-dot.is-active {
+      width: 34px;
+      background: var(--red);
+      transform: scaleY(1.05);
+    }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .section-label {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 0 0 48px;
+    }
+    .section-label::before,
+    .section-label::after {
+      content: "";
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(38,54,83,.14), transparent);
+    }
+    .brands.brand-page-section {
+      padding: 0 0 80px;
+    }
+    .brands.brand-page-section .brand-row {
+      display: block;
+    }
+    .brands.brand-page-section .brand-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 28px 38px;
+    }
+    .brand-categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: -24px 0 42px;
+    }
+    .brand-category {
+      border: 1px solid rgba(201,164,107,.22);
+      background: rgba(255,255,255,.62);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .3s ease, color .3s ease, border-color .3s ease, transform .3s ease;
+    }
+    .brand-category.is-active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .brand-category:hover {
+      transform: translateY(-2px);
+      border-color: rgba(201,164,107,.46);
+    }
+    .brands.brand-page-section .brand-logo {
+      flex: 0 1 calc((100% - 190px) / 6);
+      min-height: 128px;
+      border: 1px solid rgba(201,164,107,.15);
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(38,54,83,.04);
+      padding: 14px 16px;
+      background: rgba(255,255,255,.72);
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, background .35s ease;
+    }
+    .brands.brand-page-section .brand-logo:hover {
+      transform: translateY(-8px);
+      border-color: rgba(201,164,107,.55);
+      box-shadow: 0 20px 50px rgba(0,0,0,.08);
+      background: #fff;
+    }
+    .brands.brand-page-section .brand-logo img {
+      max-width: 180px;
+      max-height: 180px;
+    }
+    .brands.brand-page-section .brand-logo.is-hidden {
+      display: none;
+    }
+    .brand-load {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .brand-load .btn {
+      min-height: 43px;
+      background: var(--navy);
+      padding: 0 28px;
+      text-transform: none;
+      box-shadow: 0 10px 24px rgba(38,54,83,.15);
+    }
+    .brand-body-copy {
+      color: var(--text);
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+      padding: 42px 46px 42px 54px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(201,164,107,.16);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      text-align: left;
+    }
+    .brand-body-copy h2 {
+      font-size: clamp(28px, 3vw, 42px);
+      margin-bottom: 16px;
+    }
+    .brand-body-copy p {
+      font-size: 17px;
+      line-height: 1.8;
+      margin: 0;
+    }
+    .brand-body-copy::before {
+      content: "";
+      position: absolute;
+      left: 28px;
+      top: 34px;
+      bottom: 34px;
+      width: 3px;
+      border-radius: 999px;
+      background: var(--red);
+    }
+    .capabilities {
+      padding: 0 0 80px;
+    }
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 30px;
+    }
+    .cap-card {
+      min-height: 138px;
+      border: 1px solid rgba(38,54,83,.08);
+      border-radius: 24px;
+      background: rgba(255,255,255,.70);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 18px;
+      padding: 28px 30px;
+      box-shadow: 0 1px 2px rgba(38,54,83,.04);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .cap-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(186,150,101,.30);
+      box-shadow: var(--shadow-soft);
+    }
+    .cap-icon {
+      color: var(--red);
+      background: var(--navy);
+      border: 1px solid rgba(201,164,107,.28);
+      border-radius: 14px;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      padding-top: 0;
+    }
+    .cap-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .cap-card h3 {
+      color: var(--text);
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: .08em;
+      margin-bottom: 15px;
+    }
+    .cap-card p {
+      color: #87919b;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    .presence-strip {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(3, .55fr);
+      gap: 18px;
+      margin-top: 32px;
+      align-items: stretch;
+    }
+    .presence-copy,
+    .presence-stat {
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(38,54,83,.08);
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(38,54,83,.04);
+    }
+    .presence-copy {
+      padding: 28px 30px;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .presence-stat {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px 18px;
+      min-height: 150px;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .presence-stat:hover {
+      transform: translateY(-3px);
+      border-color: rgba(186,150,101,.30);
+      box-shadow: var(--shadow-soft);
+    }
+    .presence-stat strong {
+      display: block;
+      color: var(--navy);
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 10px;
+      font-family: "Sora", "Inter", sans-serif;
+    }
+    .presence-stat strong::after {
+      content: "";
+      display: block;
+      width: 34px;
+      height: 2px;
+      margin: 14px auto 0;
+      background: var(--red);
+      border-radius: 999px;
+    }
+    .presence-stat span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .location {
+      padding: 60px 0 0;
+      background:
+        radial-gradient(circle at top right, rgba(201,164,107,.10), transparent 30rem),
+        linear-gradient(180deg, rgba(250,248,244,.72), rgba(250,248,244,0) 72%);
+    }
+    .location-head {
+      display: grid;
+      grid-template-columns: 1fr .55fr;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+    .location-head h2 {
+      font-size: clamp(38px, 4.4vw, 64px);
+      line-height: 1.12;
+      max-width: 680px;
+    }
+    .location-head p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      max-width: 420px;
+      padding-top: 10px;
+    }
+    .location-grid {
+      display: grid;
+      grid-template-columns: .42fr .58fr;
+      gap: 24px;
+      align-items: stretch;
+      border-radius: 28px;
+    }
+    .location-card {
+      background:
+        radial-gradient(circle at top right, rgba(201,164,107,.20), transparent 19rem),
+        linear-gradient(145deg, #1E3157, #162745);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 26px;
+      padding: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 420px;
+      box-shadow: 0 24px 70px rgba(21,34,56,.16);
+      position: relative;
+      overflow: hidden;
+    }
+    .location-card::before {
+      content: "";
+      width: 3px;
+      position: absolute;
+      top: 34px;
+      bottom: 34px;
+      left: 0;
+      background: var(--red);
+      border-radius: 999px;
+    }
+    .location-card::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -90px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,164,107,.16);
+    }
+    .location-kicker {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .location-card h2 {
+      color: #fff;
+      font-size: clamp(30px, 3vw, 44px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .location-card p {
+      color: rgba(255,255,255,.78);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+    .location-meta {
+      display: grid;
+      gap: 10px;
+      color: rgba(255,255,255,.85);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+    .location-meta span {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+    }
+    .location-meta span::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--red);
+      flex: 0 0 auto;
+      margin-top: 7px;
+    }
+    .location-link {
+      align-self: flex-start;
+      border: 1px solid rgba(186,150,101,.7);
+      color: #fff;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+    .location-link:hover {
+      background: var(--red);
+      border-color: var(--red);
+      transform: translateY(-1px);
+    }
+    .map-frame {
+      width: 100%;
+      min-height: 360px;
+      border: 0;
+      border-radius: 26px;
+      filter: grayscale(1);
+      box-shadow: 0 24px 70px rgba(21,34,56,.12);
+      background: #e8ebef;
+    }
+    .contact-ribbon {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .contact-chip {
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(201,164,107,.14);
+      border-radius: 18px;
+      padding: 20px 22px;
+      color: var(--text);
+      box-shadow: 0 14px 36px rgba(21,34,56,.06);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: center;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .contact-chip:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,164,107,.38);
+      box-shadow: var(--shadow-soft);
+    }
+    .contact-chip span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .contact-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(201,164,107,.12);
+      color: var(--red);
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .contact-chip strong {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading);
+    }
+
+    .join { padding: 0 0 120px; }
+    .join-box {
+      position: relative;
+      min-height: 176px;
+      background: var(--red);
+      color: #fff;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 44px 72px;
+      overflow: hidden;
+    }
+    .join-box::after { right: -20px; bottom: -22px; opacity: .8; }
+    .join h2 { margin-bottom: 15px; }
+
+    footer {
+      background:
+        linear-gradient(180deg, #1E3157, #162745);
+      color: #fff;
+      padding: 104px 0 34px;
+      margin-top: 40px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 1.3fr .8fr .8fr 1.1fr; gap: 56px; margin-bottom: 70px; }
+    .footer-logo { font-size: 26px; font-weight: 800; letter-spacing: -.05em; margin-bottom: 22px; }
+    .footer-logo span { color: var(--red); }
+    .footer-about { color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.75; margin-bottom: 24px; }
+    .socials { display: flex; gap: 12px; }
+    .socials a {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 1px solid rgba(186, 150, 101, .55);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .socials a:hover { background: var(--red); border-color: var(--red); }
+    .footer-title { color: var(--red); font-size: 13px; font-weight: 800; text-transform: uppercase; margin-bottom: 24px; }
+    .footer-links { display: grid; gap: 13px; color: rgba(255,255,255,.75); font-size: 13px; }
+    .footer-links a { transition: color .3s ease, transform .3s ease; }
+    .footer-links a:hover { color: var(--red); transform: translateX(3px); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-info { display: none; }
+      .nav .wrap { position: relative; }
+      .nav-toggle { display: inline-flex; }
+      .nav-links {
+        display: grid;
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 24px;
+        right: 24px;
+        gap: 0;
+        padding: 10px;
+        border: 1px solid rgba(201,164,107,.18);
+        border-radius: 22px;
+        background: rgba(255,255,255,.94);
+        box-shadow: var(--shadow-soft);
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+      }
+      .nav.is-open .nav-links {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block;
+        padding: 14px 14px;
+        border-radius: 14px;
+      }
+      .nav-links a:hover {
+        background: rgba(201,164,107,.10);
+      }
+      .nav-links a::after { display: none; }
+      .hero-grid, .track-box, .split-grid, .brand-row, .footer-grid { grid-template-columns: 1fr; }
+      .feature-grid, .test-grid { grid-template-columns: 1fr; }
+      .brand-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .brand-hero { grid-template-columns: 1fr; gap: 36px; }
+      .brands.brand-page-section .brand-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .brands.brand-page-section .brand-logo { flex-basis: calc((100% - 76px) / 3); }
+      .cap-grid { grid-template-columns: 1fr; }
+      .location-grid { grid-template-columns: 1fr; }
+      .location-head { display: grid; }
+      .presence-strip { grid-template-columns: 1fr; }
+      .contact-ribbon { grid-template-columns: 1fr; }
+      .gallery-slide { flex-basis: calc((100% - 18px) / 2); }
+      .gallery-slide img { height: 235px; }
+      .hero { padding-top: 56px; }
+      .hero-art { min-height: 330px; }
+      .track-box, .split-card, .join-box { padding: 36px 28px; }
+      .split-card { margin-left: 0; }
+      .worker { min-height: 260px; }
+    }
+    @media (max-width: 620px) {
+      .wrap { padding: 0 18px; }
+      p { font-size: 15px; line-height: 1.7; }
+      .topbar { display: none; }
+      .nav .wrap { height: 66px; gap: 12px; }
+      .logo-img { height: 42px; }
+      .nav .btn.light {
+        display: none;
+      }
+      .nav-links {
+        left: 18px;
+        right: 18px;
+      }
+      .nav-cta {
+        min-height: 40px;
+        padding: 0 14px;
+        font-size: 10px;
+      }
+      .brand-page { padding-bottom: 0; }
+      .brand-hero {
+        padding: 54px 18px 44px;
+        gap: 28px;
+      }
+      .brand-hero > div:first-child {
+        order: 2;
+      }
+      .brand-hero > .brand-mark-wrap {
+        order: 1;
+      }
+      .brand-hero h1 {
+        font-size: 40px;
+        line-height: 1.08;
+        margin-bottom: 22px;
+      }
+      .brand-copy {
+        gap: 14px;
+        padding-top: 20px;
+        max-width: none;
+      }
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin-top: 24px;
+      }
+      .hero-actions .btn {
+        width: 100%;
+      }
+      .brand-mark-wrap {
+        min-height: 240px;
+      }
+      .brand-mark {
+        width: min(280px, 100%);
+      }
+      .brand-mark span {
+        font-size: 38px;
+      }
+      .brand-gallery {
+        padding-bottom: 58px;
+      }
+      .track-form { grid-template-columns: 1fr; }
+      .brand-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .gallery-slide { flex-basis: 100%; }
+      .gallery-slide img { height: 245px; }
+      .brands.brand-page-section .brand-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .brands.brand-page-section .brand-logo { flex: 0 0 calc((100% - 14px) / 2); }
+      .brands.brand-page-section {
+        padding-bottom: 56px;
+      }
+      .brand-categories {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 6px;
+        margin-bottom: 30px;
+      }
+      .brand-category {
+        flex: 0 0 auto;
+      }
+      .brands.brand-page-section .brand-logo {
+        min-height: 108px;
+        padding: 12px;
+      }
+      .brands.brand-page-section .brand-logo img {
+        max-height: 120px;
+      }
+      .brand-body-copy {
+        padding: 30px 24px 30px 34px;
+        margin-bottom: 34px;
+      }
+      .brand-body-copy::before {
+        left: 18px;
+        top: 26px;
+        bottom: 26px;
+      }
+      .brand-body-copy h2 {
+        font-size: 28px;
+      }
+      .capabilities {
+        padding-bottom: 56px;
+      }
+      .cap-card {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+      .cap-card h3 {
+        font-size: 20px;
+      }
+      .presence-copy {
+        padding: 24px;
+      }
+      .presence-stat {
+        min-height: 118px;
+      }
+      .presence-stat strong {
+        font-size: 42px;
+      }
+      .location {
+        padding: 54px 0 0;
+        background: linear-gradient(180deg, rgba(247,247,245,.92), rgba(247,247,245,.92));
+      }
+      .location-head {
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .location-head h2 {
+        font-size: 30px;
+      }
+      .location-card { min-height: auto; padding: 30px 24px; border-radius: 20px; }
+      .location-card h2 { font-size: 28px; }
+      .location-meta { font-size: 12px; }
+      .map-frame { min-height: 300px; }
+      .brand-mark-wrap::before { width: 78%; height: 230px; }
+      .contact-ribbon {
+        margin: 16px 0 36px;
+      }
+      .contact-chip {
+        grid-template-columns: 38px 1fr;
+        padding: 16px;
+      }
+      .contact-icon {
+        width: 38px;
+        height: 38px;
+      }
+      footer {
+        padding-top: 54px;
+      }
+      .footer-grid {
+        gap: 32px;
+        margin-bottom: 42px;
+      }
+      .footer-logo {
+        font-size: 22px;
+      }
+      .join-box, .footer-bottom { align-items: flex-start; flex-direction: column; }
+      .topbar .wrap { justify-content: center; }
+      .circle { width: 290px; }
+      .fi-1 { right: 38px; }
+      .fi-2 { left: 20px; }
+      .fi-3 { right: 50px; }
+    }
+    body,
+.brand-page,
+.brand-gallery,
+.brands,
+.brands.brand-page-section,
+.capabilities,
+.location {
+  background: #fff !important;
+}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="topbar-info">
+        <span>Palais Royal luxury beauty distribution</span>
+      </div>
+      <div class="topbar-info">
+        <span>info@abuissa.com</span>
+        <span>4499 5663</span>
+        <span>Sun - Mon: 08:00 - 22:00</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a href="#home" class="logo">
+        <img class="logo-img" src="images/logo.webp" alt="Palais Royal">
+        <span class="logo-text">Palais Royal</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#brands">Brands</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+      <a class="btn light" href="#contact">Contact Us</a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="home" class="brand-page">
+    <section class="wrap brand-hero">
+      <div>
+        <h1>Palais Royal</h1>
+        <div class="brand-copy">
+          <p>Palais Royal excels in distributing the trendiest niche fragrances, premium cosmetics, skincare, and makeup across Qatar. As luxury beauty ambassadors, we proudly represent a diverse portfolio of exquisite brands that epitomize sophistication and elegance.</p>
+          <p>Our carefully curated collection reflects a commitment to quality, ensuring our partners access the most sought-after beauty products. Through tailored marketing solutions and strategic partnerships, we enhance retailers' engagement with their customers.</p>
+          <p>Discover how Palais Royal can elevate your beauty offerings and position your brand for success within the esteemed portfolio of Abu Issa Holding, where luxury meets innovation.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn light" href="#contact">Contact Us</a>
+        </div>
+      </div>
+      <div class="brand-mark-wrap" aria-hidden="true">
+        <div class="brand-mark">
+          <div>
+            <span>PR</span>
+            Palais Royal
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-gallery" id="gallery">
+      <div class="wrap">
+        <div class="gallery-slider" data-gallery-slider>
+          <div class="gallery-track">
+            <div class="gallery-slide is-active">
+              <img src="images/xerjoff-1.jpg" alt="Xerjoff boutique" loading="lazy">
+            </div>
+            <div class="gallery-slide">
+              <img src="images/hind al oud.jpg" alt="Hind Al Oud boutique" loading="lazy">
+            </div>
+            <div class="gallery-slide">
+              <img src="images/ex-nihilo.jpg" alt="Ex Nihilo boutique" loading="lazy">
+            </div>
+          </div>
+          <div class="gallery-dots" aria-label="Gallery navigation">
+            <button class="gallery-dot is-active" type="button" aria-label="Show Xerjoff boutique" aria-current="true"></button>
+            <button class="gallery-dot" type="button" aria-label="Show Hind Al Oud boutique"></button>
+            <button class="gallery-dot" type="button" aria-label="Show Ex Nihilo boutique"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brands brand-page-section" id="brands">
+      <div class="wrap brand-row">
+        <div class="section-label">Brands</div>
+        <div class="brand-categories" aria-label="Brand categories">
+          <button class="brand-category is-active" type="button" data-filter="all">All Brands</button>
+          <button class="brand-category" type="button" data-filter="fragrance">Fragrance</button>
+          <button class="brand-category" type="button" data-filter="skincare">Skincare</button>
+          <button class="brand-category" type="button" data-filter="cosmetics">Cosmetics</button>
+          <button class="brand-category" type="button" data-filter="accessories">Luxury Accessories</button>
+        </div>
+        <div class="brand-logos" aria-label="Brand logos">
+          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-39-1.png" alt="Missoni" loading="lazy"></div>
+          <div class="brand-logo" data-category="accessories"><img src="images/AIH-Distribution-Logos-52-1.png" alt="Trussardi" loading="lazy"></div>
+          <div class="brand-logo" data-category="fragrance skincare"><img src="images/Palais-Royal-Profile-2023_Artboard-28.jpg" alt="Maison Francis Kurkdjian Paris" loading="lazy"></div>
+          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-01-1.png" alt="Tom Daxon" loading="lazy"></div>
+          <div class="brand-logo" data-category="cosmetics fragrance"><img src="images/AIH-Distribution-Logos-02-1.png" alt="Moschino" loading="lazy"></div>
+          <div class="brand-logo" data-category="accessories fragrance"><img src="images/AIH-Distribution-Logos-03-1.png" alt="Aigner" loading="lazy"></div>
+          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-04-1.png" alt="Creed 1760" loading="lazy"></div>
+          <div class="brand-logo" data-category="skincare fragrance"><img src="images/AIH-Distribution-Logos-05-1.png" alt="Maison Francis Kurkdjian Paris" loading="lazy"></div>
+          <div class="brand-logo" data-category="cosmetics fragrance"><img src="images/AIH-Distribution-Logos-18-1.png" alt="Paris Hilton" loading="lazy"></div>
+          <div class="brand-logo" data-category="skincare cosmetics"><img src="images/AIH-Distribution-Logos-12-1.png" alt="Talika Paris" loading="lazy"></div>
+          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-16-1.png" alt="Cave Essential Luxury Parfum" loading="lazy"></div>
+          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-36-1.png" alt="Sospiro" loading="lazy"></div>
+        </div>
+        <div class="brand-load">
+          <button class="btn" type="button" data-load-brands>Load More</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <div class="wrap">
+        <div class="brand-body-copy">
+          <h2>Prestige Distribution Network</h2>
+          <p>Brands under Palais Royal enjoy an unparalleled distribution program across the region, built through a strong network over Abu Issa Holding's experience as the first luxury retailer in Qatar. Catering to the most selective consumers in the market, our long-term relationships with department stores and specialty boutiques allow us to develop a customized brand awareness strategy. Our objective is the growth of our brands, communicating their story to create a culture around the brand, and ensuring it is fully recognized amongst target segments.</p>
+        </div>
+        <div class="section-label">Capabilities</div>
+        <div class="cap-grid">
+          <article class="cap-card">
+            <div class="cap-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h4l8-5v10l-8-5H5z"/><path d="M9 12v5a2 2 0 0 0 2 2h1"/></svg>
+            </div>
+            <div>
+              <h3>Marketing Activities</h3>
+              <p>Our brands enjoy the services of an industry leading advertising agency that assists in the concept-to-execution of our brand's messages. From in-store animation of the brand, to PR and everything in-between.</p>
+            </div>
+          </article>
+          <article class="cap-card">
+            <div class="cap-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><path d="M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M18 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+            </div>
+            <div>
+              <h3>Distribution Program</h3>
+              <p>Rapid growth of our channels in Qatar, with over 17 stand alone stores under 6 department store concepts including Blue Salon, Highlands, Pari Gallery, Sephora and others.</p>
+            </div>
+          </article>
+          <article class="cap-card">
+            <div class="cap-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4c0 3-4 6-4 6S8 10 8 7a4 4 0 0 1 4-4z"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
+            </div>
+            <div>
+              <h3>Brand Advisors</h3>
+              <p>Investment in our staff is key, in communicating the brand experience and message of our exclusive brands. Palais Royal recruits, trains and supports to achieve brand objectives.</p>
+            </div>
+          </article>
+          <article class="cap-card">
+            <div class="cap-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="M12 3v4"/><path d="M12 17v4"/></svg>
+            </div>
+            <div>
+              <h3>A Strong Network</h3>
+              <p>We have the ability to fast-track the growth and development of our brands through our long-standing relationships with suppliers.</p>
+            </div>
+          </article>
+        </div>
+        <!-- <div class="presence-strip">
+          <p class="presence-copy">Palais Royal currently carries over 20 Niche brands and over 20 Selective brands under its distribution arm. We continue to grow to serve nuances of the GCC market, with top-of-mind awareness for our target markets for the exclusive brands we distribute.</p>
+          <div class="presence-stat">
+            <div>
+              <strong>20+</strong>
+              <span>Niche Brands</span>
+            </div>
+          </div>
+          <div class="presence-stat">
+            <div>
+              <strong>20+</strong>
+              <span>Selective Brands</span>
+            </div>
+          </div>
+          <div class="presence-stat">
+            <div>
+              <strong>17+</strong>
+              <span>Retail Channels</span>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <section class="location" id="location">
+      <div class="wrap">
+        <div class="location-head">
+          <h2>Visit Our Doha Office</h2>
+        </div>
+        <div class="location-grid">
+          <div class="location-card">
+            <div class="location-kicker">Location</div>
+            <h2>Palais Royal Office</h2>
+            <p>Located in Al Sadd, with direct access to Abu Issa Holding's luxury retail and distribution network.</p>
+            <div class="location-meta">
+              <span>Zone 39, Street 343, Darwish United Building</span>
+              <span>Al Sadd - Doha, Qatar</span>
+              <span>Palais Royal Office</span>
+              <span>By appointment for brand and distribution enquiries</span>
+            </div>
+            <a class="location-link" href="https://www.google.com/maps?q=25.28003944595362,51.49756986113027" target="_blank" rel="noopener">Open in Google Maps</a>
+          </div>
+          <iframe
+            class="map-frame"
+            title="Palais Royal Office location map"
+            loading="lazy"
+            src="https://maps.google.com/maps?q=25.28003944595362,51.49756986113027&z=16&output=embed">
+          </iframe>
+        </div>
+        <div class="contact-ribbon">
+          <div class="contact-chip">
+            <div class="contact-icon" aria-hidden="true">PH</div>
+            <div>
+              <span>Phone</span>
+              <strong>4499 5663</strong>
+            </div>
+          </div>
+          <div class="contact-chip">
+            <div class="contact-icon" aria-hidden="true">EM</div>
+            <div>
+              <span>Email</span>
+              <strong>info@abuissa.com</strong>
+            </div>
+          </div>
+          <div class="contact-chip">
+            <div class="contact-icon" aria-hidden="true">HR</div>
+            <div>
+              <span>Hours</span>
+              <strong>Sun - Mon: 08:00 - 22:00</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">Palais <span>Royal</span></div>
+          <p class="footer-about">A luxury beauty distributor representing niche fragrances, premium cosmetics, skincare and makeup brands across Qatar.</p>
+          <div class="socials">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="Instagram">ig</a>
+            <a href="#" aria-label="Twitter">tw</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Useful Link</div>
+          <div class="footer-links">
+            <a href="#home">About</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#brands">Brands</a>
+            <a href="#capabilities">Capabilities</a>
+            <a href="#location">Location</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Company</div>
+          <div class="footer-links">
+            <a href="#">Team</a>
+            <a href="#">Career</a>
+            <a href="#">Blog</a>
+            <a href="#contact">Contact Us</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Contact</div>
+          <div class="footer-links">
+            <span>Zone 39, Street 343, Darwish United Building, Al Sadd - Doha, Qatar</span>
+            <span>4499 5663</span>
+            <span>info@abuissa.com</span>
+            <span>Sun-Mon: 08:00 - 22:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Palais Royal - Part of Abu Issa Holding</span>
+        <a href="#home">Back To Top</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const nav = document.querySelector('.nav');
+    const navToggle = document.querySelector('.nav-toggle');
+    if (nav && navToggle) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+        navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      });
+
+      nav.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('is-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+          navToggle.setAttribute('aria-label', 'Open menu');
+        });
+      });
+    }
+
+    const gallery = document.querySelector('[data-gallery-slider]');
+    if (gallery) {
+      const track = gallery.querySelector('.gallery-track');
+      const originalSlides = Array.from(gallery.querySelectorAll('.gallery-slide'));
+      const dots = Array.from(gallery.querySelectorAll('.gallery-dot'));
+      originalSlides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        clone.classList.remove('is-active');
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+      const slides = Array.from(gallery.querySelectorAll('.gallery-slide'));
+      let activeIndex = 0;
+      let timerId;
+
+      function visibleCount() {
+        if (window.matchMedia('(max-width: 620px)').matches) return 1;
+        if (window.matchMedia('(max-width: 900px)').matches) return 2;
+        return 3;
+      }
+
+      function maxIndex() {
+        return dots.length - 1;
+      }
+
+      function slideStep() {
+        const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        return slides[0].getBoundingClientRect().width + gap;
+      }
+
+      function syncDots() {
+        dots.forEach((dot, dotIndex) => {
+          dot.hidden = false;
+        });
+      }
+
+      function showSlide(index) {
+        const lastIndex = maxIndex();
+        activeIndex = (index + lastIndex + 1) % (lastIndex + 1);
+        track.style.transform = `translateX(-${activeIndex * slideStep()}px)`;
+        slides.forEach((slide, slideIndex) => {
+          const visible = slideIndex >= activeIndex && slideIndex < activeIndex + visibleCount();
+          slide.classList.toggle('is-active', visible);
+        });
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === activeIndex;
+          dot.classList.toggle('is-active', isActive);
+          if (isActive) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+      }
+
+      function startSlider() {
+        clearInterval(timerId);
+        timerId = setInterval(() => showSlide(activeIndex + 1), 3000);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showSlide(index);
+          startSlider();
+        });
+      });
+
+      window.addEventListener('resize', () => {
+        syncDots();
+        showSlide(activeIndex);
+      });
+
+      gallery.addEventListener('mouseenter', () => clearInterval(timerId));
+      gallery.addEventListener('mouseleave', startSlider);
+      syncDots();
+      showSlide(0);
+      startSlider();
+    }
+
+    const brandSection = document.querySelector('#brands');
+    if (brandSection) {
+      const filterButtons = Array.from(brandSection.querySelectorAll('.brand-category'));
+      const brandCards = Array.from(brandSection.querySelectorAll('.brand-logo'));
+      const loadButton = brandSection.querySelector('[data-load-brands]');
+      let activeFilter = 'all';
+      let expanded = false;
+
+      function visibleBrandColumns() {
+        if (window.matchMedia('(max-width: 620px)').matches) return 2;
+        if (window.matchMedia('(max-width: 900px)').matches) return 3;
+        return 6;
+      }
+
+      function initialVisibleCount() {
+        return visibleBrandColumns() * 2;
+      }
+
+      function matchingCards() {
+        return brandCards.filter(card => {
+          if (activeFilter === 'all') return true;
+          return card.dataset.category.split(' ').includes(activeFilter);
+        });
+      }
+
+      function renderBrands() {
+        const matches = matchingCards();
+        brandCards.forEach(card => card.classList.add('is-hidden'));
+
+        const visibleLimit = expanded ? matches.length : initialVisibleCount();
+        matches.slice(0, visibleLimit).forEach(card => card.classList.remove('is-hidden'));
+
+        if (loadButton) {
+          const remaining = matches.length - visibleLimit;
+          loadButton.hidden = remaining <= 0;
+          loadButton.textContent = remaining > 0 ? `Load More (${remaining})` : 'Load More';
+        }
+      }
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          activeFilter = button.dataset.filter;
+          expanded = false;
+          filterButtons.forEach(item => {
+            item.classList.toggle('is-active', item === button);
+          });
+          renderBrands();
+        });
+      });
+
+      if (loadButton) {
+        loadButton.addEventListener('click', () => {
+          expanded = true;
+          renderBrands();
+        });
+      }
+
+      window.addEventListener('resize', renderBrands);
+
+      renderBrands();
+    }
+  </script>
+</body>
+</html>

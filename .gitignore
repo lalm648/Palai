@@ -1,0 +1,22 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local tooling / agent metadata
+.claude/
+.agents/
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Dependency/build output if tooling is added later
+node_modules/
+dist/
+build/
+.cache/
