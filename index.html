@@ -1191,8 +1191,12 @@
       .brand-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
       .gallery-slide { flex-basis: 100%; }
       .gallery-slide img { height: 245px; }
-      .brands.brand-page-section .brand-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .brands.brand-page-section .brand-logo { flex: 0 0 calc((100% - 14px) / 2); }
+      .brands.brand-page-section .brand-logos {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .brands.brand-page-section .brand-logo { width: 100%; }
       .brands.brand-page-section {
         padding-bottom: 56px;
       }
