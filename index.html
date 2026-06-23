@@ -45,7 +45,7 @@
     img { max-width: 100%; display: block; }
 
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    h1, h2, h3, h4, .logo, .footer-logo { font-family: "Sora", "Inter", sans-serif; letter-spacing: 0; color: var(--heading); }
+    h1, h2, h3, h4, .logo, .footer-logo { font-family: "Sora", "Inter", sans-serif; letter-spacing: 0;}
     p { font-size: 18px; line-height: 1.8; }
     .topbar { background: var(--navy); color: #fff; font-size: 12px; font-weight: 700; }
     .topbar .wrap {
@@ -697,7 +697,7 @@
       text-align: center;
       max-width: 1200px;
       /* margin: 0 auto 0; */
-      padding: 50px 20px;
+      padding: 50px 0;
       background: transparent;
       border: 0;
       border-radius: 0;
@@ -720,7 +720,7 @@
     .cap-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px 30px;
+      gap: 34px 40px;
     }
     .cap-card {
       min-height: 138px;
@@ -936,7 +936,7 @@
       background: #e8ebef;
     }
     .contact-ribbon {
-      margin-top: 22px;
+      margin:50px 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
@@ -1005,8 +1005,7 @@
     .join h2 { margin-bottom: 15px; }
 
     footer {
-      background:
-        linear-gradient(180deg, #2C2C2C, #171717);
+      background:#2C2C2C;
       color: #fff;
       padding: 104px 0 34px;
       margin-top: 40px;
@@ -1219,6 +1218,8 @@
       }
       footer {
         padding-top: 54px;
+        color: #fff!important;
+
       }
       .footer-grid {
         gap: 32px;
