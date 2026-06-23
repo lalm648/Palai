@@ -279,6 +279,12 @@
       place-items: center;
       font-size: 25px;
       font-weight: 800;
+      transition: transform .55s cubic-bezier(.22, 1, .36, 1), box-shadow .55s cubic-bezier(.22, 1, .36, 1);
+      will-change: transform;
+    }
+    .float-icon:hover {
+      transform: translateY(400px);
+      box-shadow: 0 24px 55px rgba(38,54,83,.18);
     }
     .fi-1 { top: 16px; right: 108px; }
     .fi-2 { left: 58px; top: 142px; }
