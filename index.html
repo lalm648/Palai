@@ -11,10 +11,10 @@
     :root {
       --red: #C9A46B;
       --red-dark: #A98249;
-      --navy: #1E3157;
-      --navy-2: #2B4474;
-      --heading: #152238;
-      --text: #4A5565;
+      --navy: #242424;
+      --navy-2: #363636;
+      --heading: #1F1F1F;
+      --text: #4A4A4A;
       --muted: #7A8493;
       --line: rgba(201,164,107,.16);
       --surface: #F3EFE9;
@@ -34,7 +34,7 @@
       color: var(--text);
       background:
         radial-gradient(circle at top right, rgba(201,164,107,.10), transparent 34rem),
-        radial-gradient(circle at bottom left, rgba(30,49,87,.08), transparent 36rem),
+        radial-gradient(circle at bottom left, rgba(36,36,36,.05), transparent 36rem),
         var(--ivory);
       overflow-x: hidden;
     }
@@ -77,7 +77,7 @@
     }
     .logo-img {
       width: auto;
-      height: 60px;
+      height: 70px;
       object-fit: contain;
       display: block;
     }
@@ -198,7 +198,7 @@
       cursor: pointer;
       transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
     }
-    .btn:hover { background: var(--navy-2); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(30,49,87,.18); }
+    .btn:hover { background: var(--navy-2); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(36,36,36,.16); }
     .btn.light { background: #fff; border: 1px solid var(--red); color: var(--red); }
     .btn.light:hover { background: var(--red); color: #fff; box-shadow: 0 14px 30px rgba(201,164,107,.22); }
     .hero-art {
@@ -442,12 +442,13 @@
       align-items: center;
     }
     .brand-hero h1 {
-      font-size: clamp(48px, 6vw, 78px);
+      font-size: clamp(48px, 6vw, 68px);
       line-height: 1;
-      font-weight: 800;
+      font-weight: 600;
       letter-spacing: -.04em;
       margin-bottom: 34px;
       text-transform: none;
+      color: var(--red);
     }
     .brand-copy {
       color: var(--text);
@@ -480,10 +481,11 @@
       height: 286px;
       background:
         radial-gradient(circle at top right, rgba(201,164,107,.24), transparent 14rem),
-        linear-gradient(135deg, rgba(30,49,87,.98), rgba(43,68,116,.88)),
+        linear-gradient(135deg, rgba(36,36,36,.98), rgba(58,58,58,.90)),
         var(--navy);
       border-radius: 26px;
       z-index: 0;
+      animation: heroGlowDrift 8s ease-in-out infinite;
     }
     .brand-mark {
       position: relative;
@@ -496,7 +498,7 @@
       box-shadow: var(--shadow-soft);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
-      animation: floatCard 6s ease-in-out infinite;
+      animation: logoGlow 7s ease-in-out infinite;
       display: grid;
       place-items: center;
       color: var(--red);
@@ -505,6 +507,20 @@
       letter-spacing: .18em;
       text-transform: uppercase;
       font-size: 24px;
+      overflow: hidden;
+    }
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: -80% -40%;
+      background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,.38) 50%, transparent 58%);
+      transform: translateX(-45%) rotate(8deg);
+      animation: logoSheen 6.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .brand-mark > div {
+      position: relative;
+      z-index: 1;
     }
     .brand-mark span {
       display: block;
@@ -577,9 +593,18 @@
       background: var(--red);
       transform: scaleY(1.05);
     }
-    @keyframes floatCard {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes logoGlow {
+      0%, 100% { box-shadow: var(--shadow-soft); }
+      50% { box-shadow: 0 18px 48px rgba(201,164,107,.18); }
+    }
+    @keyframes heroGlowDrift {
+      0%, 100% { transform: translate3d(0, 0, 0); opacity: .98; }
+      50% { transform: translate3d(-10px, 8px, 0); opacity: .88; }
+    }
+    @keyframes logoSheen {
+      0%, 42% { transform: translateX(-55%) rotate(8deg); opacity: 0; }
+      52% { opacity: .75; }
+      66%, 100% { transform: translateX(55%) rotate(8deg); opacity: 0; }
     }
     .section-label {
       display: grid;
@@ -860,7 +885,7 @@
     .location-card {
       background:
         radial-gradient(circle at top right, rgba(201,164,107,.20), transparent 19rem),
-        linear-gradient(145deg, #1E3157, #162745);
+        linear-gradient(145deg, #2C2C2C, #171717);
       color: #fff;
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 26px;
@@ -872,26 +897,6 @@
       box-shadow: 0 24px 70px rgba(21,34,56,.16);
       position: relative;
       overflow: hidden;
-    }
-    .location-card::before {
-      content: "";
-      width: 3px;
-      position: absolute;
-      top: 34px;
-      bottom: 34px;
-      left: 0;
-      background: var(--red);
-      border-radius: 999px;
-    }
-    .location-card::after {
-      content: "";
-      position: absolute;
-      right: -90px;
-      bottom: -90px;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      border: 1px solid rgba(201,164,107,.16);
     }
     .location-kicker {
       color: var(--red);
@@ -1031,7 +1036,7 @@
 
     footer {
       background:
-        linear-gradient(180deg, #1E3157, #162745);
+        linear-gradient(180deg, #2C2C2C, #171717);
       color: #fff;
       padding: 104px 0 34px;
       margin-top: 40px;
@@ -1128,7 +1133,7 @@
       p { font-size: 15px; line-height: 1.7; }
       .topbar { display: none; }
       .nav .wrap { height: 66px; gap: 12px; }
-      .logo-img { height: 42px; }
+      .logo-img { height: 54px; }
       .nav .btn.light {
         display: none;
       }
@@ -1481,7 +1486,6 @@
         </div>
         <div class="location-grid">
           <div class="location-card">
-            <div class="location-kicker">Location</div>
             <h2>Palais Royal Office</h2>
             <p>Located in Al Sadd, with direct access to Abu Issa Holding's luxury retail and distribution network.</p>
             <div class="location-meta">
