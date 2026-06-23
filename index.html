@@ -23,6 +23,8 @@
       --white: #fff;
       --shadow: 0 20px 50px rgba(21, 34, 56, .08);
       --shadow-soft: 0 1px 2px rgba(21, 34, 56, .05), 0 16px 40px rgba(21, 34, 56, .07);
+      --card-shadow: 0 1px 2px rgba(24, 24, 24, .04), 0 7px 18px rgba(24, 24, 24, .07);
+      --card-shadow-hover: 0 2px 4px rgba(24, 24, 24, .05), 0 11px 26px rgba(24, 24, 24, .09);
       --radius: 24px;
       --max: 1400px;
     }
@@ -43,7 +45,7 @@
     img { max-width: 100%; display: block; }
 
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    h1, h2, h3, h4, .logo, .footer-logo { font-family: "Sora", "Inter", sans-serif; letter-spacing: -.02em; color: var(--heading); }
+    h1, h2, h3, h4, .logo, .footer-logo { font-family: "Sora", "Inter", sans-serif; letter-spacing: 0; color: var(--heading); }
     p { font-size: 18px; line-height: 1.8; }
     .topbar { background: var(--navy); color: #fff; font-size: 12px; font-weight: 700; }
     .topbar .wrap {
@@ -170,7 +172,7 @@
       font-size: clamp(36px, 4.7vw, 61px);
       line-height: 1.13;
       font-weight: 800;
-      letter-spacing: -.04em;
+      letter-spacing: 0;
       max-width: 520px;
       text-transform: uppercase;
       margin-bottom: 24px;
@@ -186,7 +188,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
+      min-height: 42px;
       border: 0;
       border-radius: 999px;
       background: var(--navy);
@@ -441,108 +443,123 @@
 
     .brand-page { padding-bottom: 0; }
     .brand-hero {
-      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      min-height: clamp(520px, 72vh, 720px);
       display: grid;
-      grid-template-columns: 1fr .9fr;
-      gap: 70px;
-      align-items: center;
+      align-items: end;
+      isolation: isolate;
+    }
+    .hero-slider {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-slide.is-active {
+      opacity: 1;
+    }
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.02);
+      transition: transform 7s ease;
+    }
+    .hero-slide.is-active img {
+      transform: scale(1);
+    }
+    .brand-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.68), rgba(0,0,0,.28) 42%, rgba(0,0,0,.08)),
+        linear-gradient(0deg, rgba(0,0,0,.46), transparent 50%);
+    }
+    .hero-content {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      padding: 0 24px 72px;
+      color: #fff;
     }
     .brand-hero h1 {
-      font-size: clamp(48px, 6vw, 68px);
-      line-height: 1;
+      color: #fff;
+      font-size: clamp(38px, 4.8vw, 62px);
+      line-height: 1.06;
       font-weight: 600;
-      letter-spacing: -.04em;
-      margin-bottom: 34px;
+      margin-bottom: 18px;
       text-transform: none;
-      color: var(--red);
+      max-width: 560px;
+    }
+    .hero-kicker {
+      color: rgba(255,255,255,.78);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
     }
     .brand-copy {
-      color: var(--text);
-      font-size: 17px;
-      line-height: 1.65;
-      max-width: 585px;
-      display: grid;
-      gap: 20px;
-      padding: 30px 0 0;
-      border-top: 1px solid rgba(201,164,107,.28);
+      color: rgba(255,255,255,.78);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 620px;
     }
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      margin-top: 28px;
+    }
+    .hero-actions .btn.light {
+      background: transparent;
+      border-color: rgba(255,255,255,.74);
+      color: #fff;
+    }
+    .hero-actions .btn.light:hover {
+      background: #fff;
+      color: var(--navy);
+      box-shadow: none;
+    }
+    .hero-dots {
+      display: flex;
+      gap: 10px;
       margin-top: 34px;
     }
-    .brand-mark-wrap {
-      position: relative;
-      min-height: 330px;
-      display: grid;
-      place-items: center;
+    .hero-dot {
+      width: 34px;
+      height: 2px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.34);
+      padding: 0;
+      cursor: pointer;
+      transition: background .3s ease, width .3s ease;
     }
-    .brand-mark-wrap::before {
-      content: "";
-      position: absolute;
-      top: 18px;
-      right: 12px;
-      width: 360px;
-      height: 286px;
-      background:
-        radial-gradient(circle at top right, rgba(201,164,107,.24), transparent 14rem),
-        linear-gradient(135deg, rgba(36,36,36,.98), rgba(58,58,58,.90)),
-        var(--navy);
-      border-radius: 26px;
-      z-index: 0;
-      animation: heroGlowDrift 8s ease-in-out infinite;
+    .hero-dot.is-active {
+      width: 54px;
+      background: #fff;
     }
-    .brand-mark {
-      position: relative;
-      z-index: 1;
-      width: min(360px, 90%);
-      aspect-ratio: 1.15;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(255,255,255,.62);
-      border-radius: 22px;
-      box-shadow: var(--shadow-soft);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      animation: logoGlow 7s ease-in-out infinite;
-      display: grid;
-      place-items: center;
+    .brand-page section:not(.brand-hero) h2 {
       color: var(--red);
-      text-align: center;
-      font-family: Georgia, serif;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      font-size: 24px;
-      overflow: hidden;
-    }
-    .brand-mark::before {
-      content: "";
-      position: absolute;
-      inset: -80% -40%;
-      background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,.38) 50%, transparent 58%);
-      transform: translateX(-45%) rotate(8deg);
-      animation: logoSheen 6.5s ease-in-out infinite;
-      pointer-events: none;
-    }
-    .brand-mark > div {
-      position: relative;
-      z-index: 1;
-    }
-    .brand-mark span {
-      display: block;
-      font-size: 46px;
-      line-height: 1;
-      margin-bottom: 18px;
-      letter-spacing: 0;
     }
     .brand-gallery {
-      padding: 0 0 80px;
+      padding: 70px 0 76px;
     }
     .gallery-slider {
       position: relative;
       overflow: hidden;
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
       background: #fff;
     }
     .gallery-track {
@@ -556,7 +573,7 @@
       position: relative;
       overflow: hidden;
       background: var(--surface);
-      border-radius: 18px;
+      border-radius: 8px;
     }
     .gallery-slide img {
       width: 100%;
@@ -603,25 +620,16 @@
       0%, 100% { box-shadow: var(--shadow-soft); }
       50% { box-shadow: 0 18px 48px rgba(201,164,107,.18); }
     }
-    @keyframes heroGlowDrift {
-      0%, 100% { transform: translate3d(0, 0, 0); opacity: .98; }
-      50% { transform: translate3d(-10px, 8px, 0); opacity: .88; }
-    }
-    @keyframes logoSheen {
-      0%, 42% { transform: translateX(-55%) rotate(8deg); opacity: 0; }
-      52% { opacity: .75; }
-      66%, 100% { transform: translateX(55%) rotate(8deg); opacity: 0; }
-    }
     .section-label {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 16px;
       color: var(--navy);
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 800;
       text-transform: uppercase;
-      margin: 0 0 48px;
+      margin: 0 0 36px;
     }
     .section-label::before,
     .section-label::after {
@@ -630,60 +638,30 @@
       background: linear-gradient(90deg, transparent, rgba(38,54,83,.14), transparent);
     }
     .brands.brand-page-section {
-      padding: 0 0 80px;
+      padding: 0 0 70px;
+      margin-top: 100px;
     }
     .brands.brand-page-section .brand-row {
       display: block;
     }
     .brands.brand-page-section .brand-logos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 28px 38px;
-    }
-    .brand-categories {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: -24px 0 42px;
-    }
-    .brand-category {
-      border: 1px solid rgba(201,164,107,.22);
-      background: rgba(255,255,255,.62);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .04em;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background .3s ease, color .3s ease, border-color .3s ease, transform .3s ease;
-    }
-    .brand-category.is-active {
-      background: var(--navy);
-      color: #fff;
-      border-color: var(--navy);
-    }
-    .brand-category:hover {
-      transform: translateY(-2px);
-      border-color: rgba(201,164,107,.46);
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 22px 28px;
     }
     .brands.brand-page-section .brand-logo {
-      flex: 0 1 calc((100% - 190px) / 6);
       min-height: 128px;
       border: 1px solid rgba(201,164,107,.15);
-      border-radius: 20px;
-      box-shadow: 0 1px 2px rgba(38,54,83,.04);
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
       padding: 14px 16px;
-      background: rgba(255,255,255,.72);
+      background: #fff;
       transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, background .35s ease;
     }
     .brands.brand-page-section .brand-logo:hover {
-      transform: translateY(-8px);
+      transform: translateY(-3px);
       border-color: rgba(201,164,107,.55);
-      box-shadow: 0 20px 50px rgba(0,0,0,.08);
+      box-shadow: var(--card-shadow-hover);
       background: #fff;
     }
     .brands.brand-page-section .brand-logo img {
@@ -700,42 +678,41 @@
     }
     .brand-load .btn {
       min-height: 43px;
-      background: var(--navy);
+      background: rgba(255,255,255,.62);
+      color: var(--red);
+      border: 1px solid rgba(201,164,107,.34);
       padding: 0 28px;
       text-transform: none;
-      box-shadow: 0 10px 24px rgba(38,54,83,.15);
+      box-shadow: none;
+    }
+    .brand-load .btn:hover,
+    .brand-load .btn:focus-visible {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: 0 10px 24px rgba(201,164,107,.18);
     }
     .brand-body-copy {
       color: var(--text);
       text-align: center;
-      max-width: 1100px;
-      margin: 0 auto 48px;
-      padding: 42px 46px 42px 54px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(201,164,107,.16);
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
+      max-width: 1200px;
+      /* margin: 0 auto 0; */
+      padding: 50px 20px;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
       position: relative;
       text-align: left;
     }
     .brand-body-copy h2 {
-      font-size: clamp(28px, 3vw, 42px);
+      font-size: clamp(24px, 2.4vw, 34px);
       margin-bottom: 16px;
     }
     .brand-body-copy p {
-      font-size: 17px;
+      font-size: 15px;
       line-height: 1.8;
       margin: 0;
-    }
-    .brand-body-copy::before {
-      content: "";
-      position: absolute;
-      left: 28px;
-      top: 34px;
-      bottom: 34px;
-      width: 3px;
-      border-radius: 999px;
-      background: var(--red);
     }
     .capabilities {
       padding: 0 0 80px;
@@ -748,27 +725,27 @@
     .cap-card {
       min-height: 138px;
       border: 1px solid rgba(38,54,83,.08);
-      border-radius: 24px;
-      background: rgba(255,255,255,.70);
+      border-radius: 10px;
+      background: #fff;
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       display: grid;
       grid-template-columns: 54px 1fr;
       gap: 18px;
       padding: 28px 30px;
-      box-shadow: 0 1px 2px rgba(38,54,83,.04);
+      box-shadow: var(--card-shadow);
       transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
     .cap-card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-3px);
       border-color: rgba(186,150,101,.30);
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--card-shadow-hover);
     }
     .cap-icon {
       color: var(--red);
-      background: var(--navy);
+      background: var(--red-dark);
       border: 1px solid rgba(201,164,107,.28);
-      border-radius: 14px;
+      border-radius: 8px;
       width: 46px;
       height: 46px;
       display: grid;
@@ -780,16 +757,16 @@
       width: 24px;
       height: 24px;
       fill: none;
-      stroke: var(--red);
+      stroke:#fff;
       stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
     .cap-card h3 {
       color: var(--text);
-      font-size: 24px;
+      font-size: 18px;
       line-height: 1.2;
-      letter-spacing: .08em;
+      letter-spacing: 0;
       margin-bottom: 15px;
     }
     .cap-card p {
@@ -857,7 +834,7 @@
     }
 
     .location {
-      padding: 60px 0 0;
+      /* padding: 60px 0 0; */
       background:
         radial-gradient(circle at top right, rgba(201,164,107,.10), transparent 30rem),
         linear-gradient(180deg, rgba(250,248,244,.72), rgba(250,248,244,0) 72%);
@@ -870,7 +847,7 @@
       margin-bottom: 34px;
     }
     .location-head h2 {
-      font-size: clamp(38px, 4.4vw, 64px);
+      font-size: clamp(30px, 3.6vw, 48px);
       line-height: 1.12;
       max-width: 680px;
     }
@@ -889,20 +866,27 @@
       border-radius: 28px;
     }
     .location-card {
-      background:
-        radial-gradient(circle at top right, rgba(201,164,107,.20), transparent 19rem),
-        linear-gradient(145deg, #2C2C2C, #171717);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 26px;
+      background: #fff;
+      color: var(--heading);
+      border: 1px solid rgba(201,164,107,.22);
+      border-radius: 14px;
       padding: 44px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       min-height: 420px;
-      box-shadow: 0 24px 70px rgba(21,34,56,.16);
+      box-shadow: var(--card-shadow);
       position: relative;
       overflow: hidden;
+    }
+    .location-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
     }
     .location-kicker {
       color: var(--red);
@@ -913,13 +897,13 @@
       margin-bottom: 16px;
     }
     .location-card h2 {
-      color: #fff;
-      font-size: clamp(30px, 3vw, 44px);
+      color: var(--red);
+      font-size: clamp(26px, 2.6vw, 36px);
       line-height: 1.15;
       margin-bottom: 20px;
     }
     .location-card p {
-      color: rgba(255,255,255,.78);
+      color: var(--text);
       font-size: 14px;
       line-height: 1.8;
       margin-bottom: 22px;
@@ -927,7 +911,7 @@
     .location-meta {
       display: grid;
       gap: 10px;
-      color: rgba(255,255,255,.85);
+      color: var(--heading);
       font-size: 13px;
       line-height: 1.55;
       margin-bottom: 24px;
@@ -948,27 +932,16 @@
     }
     .location-link {
       align-self: flex-start;
-      border: 1px solid rgba(186,150,101,.7);
-      color: #fff;
-      border-radius: 999px;
-      padding: 12px 20px;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      transition: background .2s ease, border-color .2s ease, transform .2s ease;
-    }
-    .location-link:hover {
-      background: var(--red);
-      border-color: var(--red);
-      transform: translateY(-1px);
+      min-height: 46px;
+      padding: 0 22px;
     }
     .map-frame {
       width: 100%;
       min-height: 360px;
       border: 0;
-      border-radius: 26px;
+      border-radius: 14px;
       filter: grayscale(1);
-      box-shadow: 0 24px 70px rgba(21,34,56,.12);
+      box-shadow: var(--card-shadow);
       background: #e8ebef;
     }
     .contact-ribbon {
@@ -978,12 +951,12 @@
       gap: 14px;
     }
     .contact-chip {
-      background: rgba(255,255,255,.74);
+      background: #fff;
       border: 1px solid rgba(201,164,107,.14);
       border-radius: 18px;
       padding: 20px 22px;
       color: var(--text);
-      box-shadow: 0 14px 36px rgba(21,34,56,.06);
+      box-shadow: var(--card-shadow);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       display: grid;
@@ -995,7 +968,7 @@
     .contact-chip:hover {
       transform: translateY(-4px);
       border-color: rgba(201,164,107,.38);
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--card-shadow-hover);
     }
     .contact-chip span {
       display: block;
@@ -1048,7 +1021,7 @@
       margin-top: 40px;
     }
     .footer-grid { display: grid; grid-template-columns: 1.3fr .8fr .8fr 1.1fr; gap: 56px; margin-bottom: 70px; }
-    .footer-logo { font-size: 26px; font-weight: 800; letter-spacing: -.05em; margin-bottom: 22px; }
+    .footer-logo { font-size: 26px; font-weight: 800; letter-spacing: 0; margin-bottom: 22px; }
     .footer-logo span { color: var(--red); }
     .footer-about { color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.75; margin-bottom: 24px; }
     .socials { display: flex; gap: 12px; }
@@ -1118,9 +1091,8 @@
       .hero-grid, .track-box, .split-grid, .brand-row, .footer-grid { grid-template-columns: 1fr; }
       .feature-grid, .test-grid { grid-template-columns: 1fr; }
       .brand-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .brand-hero { grid-template-columns: 1fr; gap: 36px; }
+      .brand-hero { min-height: 560px; }
       .brands.brand-page-section .brand-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .brands.brand-page-section .brand-logo { flex-basis: calc((100% - 76px) / 3); }
       .cap-grid { grid-template-columns: 1fr; }
       .location-grid { grid-template-columns: 1fr; }
       .location-head { display: grid; }
@@ -1153,24 +1125,17 @@
         font-size: 10px;
       }
       .brand-page { padding-bottom: 0; }
-      .brand-hero {
-        padding: 54px 18px 44px;
-        gap: 28px;
-      }
-      .brand-hero > div:first-child {
-        order: 2;
-      }
-      .brand-hero > .brand-mark-wrap {
-        order: 1;
+      .brand-hero { min-height: 500px; }
+      .hero-content {
+        padding: 0 18px 42px;
       }
       .brand-hero h1 {
-        font-size: 40px;
+        font-size: 38px;
         line-height: 1.08;
-        margin-bottom: 22px;
+        margin-bottom: 16px;
       }
       .brand-copy {
-        gap: 14px;
-        padding-top: 20px;
+        font-size: 14px;
         max-width: none;
       }
       .hero-actions {
@@ -1180,15 +1145,6 @@
       }
       .hero-actions .btn {
         width: 100%;
-      }
-      .brand-mark-wrap {
-        min-height: 240px;
-      }
-      .brand-mark {
-        width: min(280px, 100%);
-      }
-      .brand-mark span {
-        font-size: 38px;
       }
       .brand-gallery {
         padding-bottom: 58px;
@@ -1206,16 +1162,6 @@
       .brands.brand-page-section {
         padding-bottom: 56px;
       }
-      .brand-categories {
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 6px;
-        margin-bottom: 30px;
-      }
-      .brand-category {
-        flex: 0 0 auto;
-      }
       .brands.brand-page-section .brand-logo {
         min-height: 108px;
         padding: 12px;
@@ -1224,16 +1170,16 @@
         max-height: 120px;
       }
       .brand-body-copy {
-        padding: 30px 24px 30px 34px;
+        padding: 0 0 0 24px;
         margin-bottom: 34px;
       }
       .brand-body-copy::before {
-        left: 18px;
-        top: 26px;
-        bottom: 26px;
+        left: 0;
+        top: 4px;
+        bottom: 4px;
       }
       .brand-body-copy h2 {
-        font-size: 28px;
+        font-size: 25px;
       }
       .capabilities {
         padding-bottom: 56px;
@@ -1269,7 +1215,6 @@
       .location-card h2 { font-size: 28px; }
       .location-meta { font-size: 12px; }
       .map-frame { min-height: 300px; }
-      .brand-mark-wrap::before { width: 78%; height: 230px; }
       .contact-ribbon {
         margin: 16px 0 36px;
       }
@@ -1345,24 +1290,148 @@
   </nav>
 
   <main id="home" class="brand-page">
-    <section class="wrap brand-hero">
-      <div>
+    <section class="brand-hero" aria-label="Palais Royal luxury beauty distribution">
+      <div class="hero-slider" data-hero-slider>
+        <div class="hero-slide is-active">
+          <img src="images/hind al oud.jpg" alt="Luxury fragrance boutique interior">
+        </div>
+        <div class="hero-slide">
+          <img src="images/xerjoff-1.jpg" alt="Curated niche fragrance displays">
+        </div>
+        <div class="hero-slide">
+          <img src="images/ex-nihilo.jpg" alt="Premium fragrance brand storefronts">
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-kicker">Luxury beauty distribution in Qatar</div>
         <h1>Palais Royal</h1>
         <div class="brand-copy">
-          <p>Palais Royal excels in distributing the trendiest niche fragrances, premium cosmetics, skincare, and makeup across Qatar. As luxury beauty ambassadors, we proudly represent a diverse portfolio of exquisite brands that epitomize sophistication and elegance.</p>
-          <p>Our carefully curated collection reflects a commitment to quality, ensuring our partners access the most sought-after beauty products. Through tailored marketing solutions and strategic partnerships, we enhance retailers' engagement with their customers.</p>
-          <p>Discover how Palais Royal can elevate your beauty offerings and position your brand for success within the esteemed portfolio of Abu Issa Holding, where luxury meets innovation.</p>
+          <p>Curating niche fragrances, premium cosmetics, skincare, and makeup for Qatar's most selective luxury retail environments.</p>
         </div>
         <div class="hero-actions">
           <a class="btn light" href="#contact">Contact Us</a>
         </div>
+        <div class="hero-dots" aria-label="Hero navigation">
+          <button class="hero-dot is-active" type="button" aria-label="Show Hind Al Oud boutique" aria-current="true"></button>
+          <button class="hero-dot" type="button" aria-label="Show Xerjoff boutique"></button>
+          <button class="hero-dot" type="button" aria-label="Show Ex Nihilo storefront"></button>
+        </div>
       </div>
-      <div class="brand-mark-wrap" aria-hidden="true">
-        <div class="brand-mark">
-          <div>
-            <span>PR</span>
-            Palais Royal
-          </div>
+    </section>
+
+         <section class="brands brand-page-section" id="brands">
+      <div class="wrap brand-row">
+        <div class="section-label">Brands</div>
+        <div class="brand-logos" aria-label="Brand logos">
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-18-1.png" alt="AIH Distribution Logos 18 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-02-1.png" alt="AIH Distribution Logos 02 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-01-1.png" alt="AIH Distribution Logos 01 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-03-1.png" alt="AIH Distribution Logos 03 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-16-1.png" alt="AIH Distribution Logos 16 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-52-1.png" alt="AIH Distribution Logos 52 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-36-1.png" alt="AIH Distribution Logos 36 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/Palais-Royal-Profile-2023_Artboard-28.jpg" alt="Palais Royal Profile 2023 Artboard 28" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-12-1.png" alt="AIH Distribution Logos 12 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-04-1.png" alt="AIH Distribution Logos 04 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-39-1.png" alt="AIH Distribution Logos 39 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-05-1.png" alt="AIH Distribution Logos 05 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-25-1.png" alt="AIH Distribution Logos 25 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/2023_Artboard-28.jpg" alt="2023 Artboard 28" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/222_Artboard-28-1024x580-1.jpg" alt="222 Artboard 28 1024x580 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/32-02-768x434-1.jpg" alt="32 02 768x434 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/31-02-500x283-1.jpg" alt="31 02 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/30-02-300x170-1.jpg" alt="30 02 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/29-02-150x85-1.jpg" alt="29 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/28-02.jpg" alt="28 02" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/26_Artboard-28.jpg" alt="26 Artboard 28" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/25_Artboard-28-1024x580-1.jpg" alt="25 Artboard 28 1024x580 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/24-02-768x434-1.jpg" alt="24 02 768x434 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/23-02-500x283-1.jpg" alt="23 02 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/23_Artboard-28-300x170-1.jpg" alt="23 Artboard 28 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/22-02-150x85-1.jpg" alt="22 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/22_Artboard-28-150x85-1.jpg" alt="22 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/21-02-150x85-1.jpg" alt="21 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/21_Artboard-28-768x435-1.jpg" alt="21 Artboard 28 768x435 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/Palais-Royal-Profile-2023-02-1-150x85-1.jpg" alt="Palais Royal Profile 2023 02 1 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/20-02-500x283-1.jpg" alt="20 02 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/20_Artboard-28-150x85-1.jpg" alt="20 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/19-02-150x85-1.jpg" alt="19 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/19_Artboard-28-150x85-1.jpg" alt="19 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/18-02.jpg" alt="18 02" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/18_Artboard-28-1024x580-1.jpg" alt="18 Artboard 28 1024x580 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/17-02-768x434-1.jpg" alt="17 02 768x434 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/17_Artboard-28-500x283-1.jpg" alt="17 Artboard 28 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/16-02-300x170-1.jpg" alt="16 02 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/16_Artboard-28-150x85-1.jpg" alt="16 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/15-02-150x85-1.jpg" alt="15 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/14-02-150x85-1.jpg" alt="14 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/14_Artboard-28-150x85-1.jpg" alt="14 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/13-02-768x434-1.jpg" alt="13 02 768x434 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/12_Artboard-28-500x283-1.jpg" alt="12 Artboard 28 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/11-02-300x170-1.jpg" alt="11 02 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/11_Artboard-28-150x85-1.jpg" alt="11 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/10-02-150x85-1.jpg" alt="10 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/10_Artboard-28-300x170-1.jpg" alt="10 Artboard 28 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/9-02-1024x579-1.jpg" alt="9 02 1024x579 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/9_Artboard-28-768x435-1.jpg" alt="9 Artboard 28 768x435 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/8-02-500x283-1.jpg" alt="8 02 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/8_Artboard-28-300x170-1.jpg" alt="8 Artboard 28 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/7-02-150x85-1.jpg" alt="7 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/7_Artboard-28-150x85-1.jpg" alt="7 Artboard 28 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/6-02-150x85-1.jpg" alt="6 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/6_Artboard-28-500x283-1.jpg" alt="6 Artboard 28 500x283 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/5-02-768x434-1.jpg" alt="5 02 768x434 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/5_Artboard-28-300x170-1.jpg" alt="5 Artboard 28 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/4-02-150x85-1.jpg" alt="4 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/4_Artboard-28-300x170-1.jpg" alt="4 Artboard 28 300x170 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/3-02.jpg" alt="3 02" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/3-02-150x85-1.jpg" alt="3 02 150x85 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/3_Artboard-28-150x85-2.jpg" alt="3 Artboard 28 150x85 2" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/2-02-1.jpg" alt="2 02 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/09/2_Artboard-28-1.jpg" alt="2 Artboard 28 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-06-1.png" alt="AIH Distribution Logos 06 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-07-1.png" alt="AIH Distribution Logos 07 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-08-1.png" alt="AIH Distribution Logos 08 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-09-1.png" alt="AIH Distribution Logos 09 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-10-1.png" alt="AIH Distribution Logos 10 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-11-1.png" alt="AIH Distribution Logos 11 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-13-1.png" alt="AIH Distribution Logos 13 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-14-1.png" alt="AIH Distribution Logos 14 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-15-1.png" alt="AIH Distribution Logos 15 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-17-1.png" alt="AIH Distribution Logos 17 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-19-1.png" alt="AIH Distribution Logos 19 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-20-1.png" alt="AIH Distribution Logos 20 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-21-1.png" alt="AIH Distribution Logos 21 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-22-1.png" alt="AIH Distribution Logos 22 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-23-1.png" alt="AIH Distribution Logos 23 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-24-1.png" alt="AIH Distribution Logos 24 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-26-1.png" alt="AIH Distribution Logos 26 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-27-1.png" alt="AIH Distribution Logos 27 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-28-1.png" alt="AIH Distribution Logos 28 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-29-1.png" alt="AIH Distribution Logos 29 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-30-1.png" alt="AIH Distribution Logos 30 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-31-1.png" alt="AIH Distribution Logos 31 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-32-1.png" alt="AIH Distribution Logos 32 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-33-1.png" alt="AIH Distribution Logos 33 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-34-1.png" alt="AIH Distribution Logos 34 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-35-1.png" alt="AIH Distribution Logos 35 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-37-1.png" alt="AIH Distribution Logos 37 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-38-1.png" alt="AIH Distribution Logos 38 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-40-1.png" alt="AIH Distribution Logos 40 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-41-1.png" alt="AIH Distribution Logos 41 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-42-1.png" alt="AIH Distribution Logos 42 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-43-1.png" alt="AIH Distribution Logos 43 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-44-1.png" alt="AIH Distribution Logos 44 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-45-1.png" alt="AIH Distribution Logos 45 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-46-1.png" alt="AIH Distribution Logos 46 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-47-1.png" alt="AIH Distribution Logos 47 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-48-1.png" alt="AIH Distribution Logos 48 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-49-1.png" alt="AIH Distribution Logos 49 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-50-1.png" alt="AIH Distribution Logos 50 1" loading="lazy"></div>
+          <div class="brand-logo"><img src="https://www.abuissa.com/wp-content/uploads/2024/10/AIH-Distribution-Logos-51-1.png" alt="AIH Distribution Logos 51 1" loading="lazy"></div>
+        </div>
+        <div class="brand-load">
+          <button class="btn" type="button" data-load-brands>Load More</button>
         </div>
       </div>
     </section>
@@ -1372,14 +1441,22 @@
         <div class="gallery-slider" data-gallery-slider>
           <div class="gallery-track">
             <div class="gallery-slide is-active">
+              <img src="images/galary-1.jpg" alt="Xerjoff boutique" loading="lazy">
+            </div>
+            <div class="gallery-slide is-active">
               <img src="images/xerjoff-1.jpg" alt="Xerjoff boutique" loading="lazy">
+            </div>
+            <div class="gallery-slide">
+              <img src="images/galary-3.jpg" alt="Ex Nihilo boutique" loading="lazy">
             </div>
             <div class="gallery-slide">
               <img src="images/hind al oud.jpg" alt="Hind Al Oud boutique" loading="lazy">
             </div>
+            
             <div class="gallery-slide">
               <img src="images/ex-nihilo.jpg" alt="Ex Nihilo boutique" loading="lazy">
             </div>
+           
           </div>
           <div class="gallery-dots" aria-label="Gallery navigation">
             <button class="gallery-dot is-active" type="button" aria-label="Show Xerjoff boutique" aria-current="true"></button>
@@ -1390,35 +1467,7 @@
       </div>
     </section>
 
-    <section class="brands brand-page-section" id="brands">
-      <div class="wrap brand-row">
-        <div class="section-label">Brands</div>
-        <div class="brand-categories" aria-label="Brand categories">
-          <button class="brand-category is-active" type="button" data-filter="all">All Brands</button>
-          <button class="brand-category" type="button" data-filter="fragrance">Fragrance</button>
-          <button class="brand-category" type="button" data-filter="skincare">Skincare</button>
-          <button class="brand-category" type="button" data-filter="cosmetics">Cosmetics</button>
-          <button class="brand-category" type="button" data-filter="accessories">Luxury Accessories</button>
-        </div>
-        <div class="brand-logos" aria-label="Brand logos">
-          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-39-1.png" alt="Missoni" loading="lazy"></div>
-          <div class="brand-logo" data-category="accessories"><img src="images/AIH-Distribution-Logos-52-1.png" alt="Trussardi" loading="lazy"></div>
-          <div class="brand-logo" data-category="fragrance skincare"><img src="images/Palais-Royal-Profile-2023_Artboard-28.jpg" alt="Maison Francis Kurkdjian Paris" loading="lazy"></div>
-          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-01-1.png" alt="Tom Daxon" loading="lazy"></div>
-          <div class="brand-logo" data-category="cosmetics fragrance"><img src="images/AIH-Distribution-Logos-02-1.png" alt="Moschino" loading="lazy"></div>
-          <div class="brand-logo" data-category="accessories fragrance"><img src="images/AIH-Distribution-Logos-03-1.png" alt="Aigner" loading="lazy"></div>
-          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-04-1.png" alt="Creed 1760" loading="lazy"></div>
-          <div class="brand-logo" data-category="skincare fragrance"><img src="images/AIH-Distribution-Logos-05-1.png" alt="Maison Francis Kurkdjian Paris" loading="lazy"></div>
-          <div class="brand-logo" data-category="cosmetics fragrance"><img src="images/AIH-Distribution-Logos-18-1.png" alt="Paris Hilton" loading="lazy"></div>
-          <div class="brand-logo" data-category="skincare cosmetics"><img src="images/AIH-Distribution-Logos-12-1.png" alt="Talika Paris" loading="lazy"></div>
-          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-16-1.png" alt="Cave Essential Luxury Parfum" loading="lazy"></div>
-          <div class="brand-logo" data-category="fragrance"><img src="images/AIH-Distribution-Logos-36-1.png" alt="Sospiro" loading="lazy"></div>
-        </div>
-        <div class="brand-load">
-          <button class="btn" type="button" data-load-brands>Load More</button>
-        </div>
-      </div>
-    </section>
+   
 
     <section class="capabilities" id="capabilities">
       <div class="wrap">
@@ -1492,7 +1541,7 @@
     <section class="location" id="location">
       <div class="wrap">
         <div class="location-head">
-          <h2>Visit Our Doha Office</h2>
+          <!-- <h2>Visit Our Doha Office</h2> -->
         </div>
         <div class="location-grid">
           <div class="location-card">
@@ -1504,7 +1553,7 @@
               <span>Palais Royal Office</span>
               <span>By appointment for brand and distribution enquiries</span>
             </div>
-            <a class="location-link" href="https://www.google.com/maps?q=25.28003944595362,51.49756986113027" target="_blank" rel="noopener">Open in Google Maps</a>
+            <a class="btn light location-link" href="https://www.google.com/maps?q=25.28003944595362,51.49756986113027" target="_blank" rel="noopener">Open in Google Maps</a>
           </div>
           <iframe
             class="map-frame"
@@ -1606,6 +1655,42 @@
       });
     }
 
+    const hero = document.querySelector('[data-hero-slider]');
+    if (hero) {
+      const slides = Array.from(hero.querySelectorAll('.hero-slide'));
+      const dots = Array.from(document.querySelectorAll('.hero-dot'));
+      let activeHeroIndex = 0;
+      let heroTimerId;
+
+      function showHeroSlide(index) {
+        activeHeroIndex = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle('is-active', slideIndex === activeHeroIndex);
+        });
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === activeHeroIndex;
+          dot.classList.toggle('is-active', isActive);
+          if (isActive) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+      }
+
+      function startHeroSlider() {
+        clearInterval(heroTimerId);
+        heroTimerId = setInterval(() => showHeroSlide(activeHeroIndex + 1), 4500);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showHeroSlide(index);
+          startHeroSlider();
+        });
+      });
+
+      showHeroSlide(0);
+      startHeroSlider();
+    }
+
     const gallery = document.querySelector('[data-gallery-slider]');
     if (gallery) {
       const track = gallery.querySelector('.gallery-track');
@@ -1684,65 +1769,40 @@
 
     const brandSection = document.querySelector('#brands');
     if (brandSection) {
-      const filterButtons = Array.from(brandSection.querySelectorAll('.brand-category'));
       const brandCards = Array.from(brandSection.querySelectorAll('.brand-logo'));
       const loadButton = brandSection.querySelector('[data-load-brands]');
-      let activeFilter = 'all';
-      let expanded = false;
+      let visibleRows = 2;
 
-      function visibleBrandColumns() {
+      function brandColumns() {
         if (window.matchMedia('(max-width: 620px)').matches) return 2;
         if (window.matchMedia('(max-width: 900px)').matches) return 3;
         return 6;
       }
 
-      function initialVisibleCount() {
-        return visibleBrandColumns() * 2;
-      }
-
-      function matchingCards() {
-        return brandCards.filter(card => {
-          if (activeFilter === 'all') return true;
-          return card.dataset.category.split(' ').includes(activeFilter);
+      function renderBrandRows() {
+        const visibleCount = visibleRows * brandColumns();
+        brandCards.forEach((card, index) => {
+          card.classList.toggle('is-hidden', index >= visibleCount);
         });
-      }
-
-      function renderBrands() {
-        const matches = matchingCards();
-        brandCards.forEach(card => card.classList.add('is-hidden'));
-
-        const visibleLimit = expanded ? matches.length : initialVisibleCount();
-        matches.slice(0, visibleLimit).forEach(card => card.classList.remove('is-hidden'));
 
         if (loadButton) {
-          const remaining = matches.length - visibleLimit;
+          const remaining = brandCards.length - visibleCount;
           loadButton.hidden = remaining <= 0;
           loadButton.textContent = remaining > 0 ? `Load More (${remaining})` : 'Load More';
         }
       }
 
-      filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          activeFilter = button.dataset.filter;
-          expanded = false;
-          filterButtons.forEach(item => {
-            item.classList.toggle('is-active', item === button);
-          });
-          renderBrands();
-        });
-      });
-
       if (loadButton) {
         loadButton.addEventListener('click', () => {
-          expanded = true;
-          renderBrands();
+          visibleRows += 2;
+          renderBrandRows();
         });
       }
 
-      window.addEventListener('resize', renderBrands);
-
-      renderBrands();
+      window.addEventListener('resize', renderBrandRows);
+      renderBrandRows();
     }
+
   </script>
 </body>
 </html>
